@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage[active,tightpage]{preview}
+\usepackage{tikz-timing}
+%% timingaxis from https://tex.stackexchange.com/questions/67821/tikz-timing-is-there-a-straightforward-way-to-add-a-numbered-time-axis
+\newcommand{\timingaxis}[1][1]{%
+  \begin{scope}
+  \draw [timing/table/axis] (0,-2*\nrows+1) -- (\twidth,-2*\nrows+1);
+  \foreach \n in {0,#1,...,\twidth} {
+    \draw [timing/table/axis ticks]
+        (\n,-2*\nrows+1+.1) -- +(0,-.2)
+        node [below,inner sep=2pt] {\scalebox{.75}{\tiny\n}};
+  }
+  \end{scope}
+}
+\tikzset{%
+    timing/table/axis/.style={->,>=latex},
+    timing/table/axis ticks/.style={},
+}
+\begin{document}
+\begin{preview}
+\begin{tikztimingtable}[xscale=1]
+\input{siggen_tb_clock.dmp}
+\input{siggen_tb_enable.dmp}
+\input{siggen_tb_reset.dmp}
+\input{siggen_tb_line.dmp}
+\begin{extracode}
+    \timingaxis[10]\relax
+\end{extracode}
+\end{tikztimingtable}
+\end{preview}
+\end{document}
