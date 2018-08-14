@@ -11,7 +11,7 @@
   \foreach \n in {0,#1,...,\twidth} {
     \draw [timing/table/axis ticks]
         (\n,-2*\nrows+1+.1) -- +(0,-.2)
-        node [below,inner sep=2pt] {\scalebox{.75}{\tiny\FPeval\result{\timeStart+\n}\num[round-mode=places,round-precision=0]{\result}}};
+        node [below,inner sep=2pt] {\scalebox{.75}{\tiny\FPeval\result{clip(\timeStart+\n)}\num{\result}}};
   }
   \end{scope}
 }

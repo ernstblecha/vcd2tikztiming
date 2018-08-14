@@ -23,7 +23,7 @@ fns = fn.split('.')
 vcd = parse_vcd(fns[0]+'.vcd')
 
 scale = 1000
-start = 0
+start = 250
 end = get_endtime()
 
 data = {}
