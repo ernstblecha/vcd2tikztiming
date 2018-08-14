@@ -12,8 +12,9 @@ __status__ = "Prototype"
 import os
 import sys
 import pprint
+pp = pprint.PrettyPrinter(indent=4)
 
-from Verilog_VCD import parse_vcd,get_endtime,get_timescale,calc_mult
+from Verilog_VCD import parse_vcd,get_endtime
 #Verilog_VCD.py version 1.11 taken from https://pypi.org/project/Verilog_VCD/#files
 
 fn = os.path.basename(__file__)
@@ -21,14 +22,23 @@ fns = fn.split('.')
 
 vcd = parse_vcd(fns[0]+'.vcd')
 
-scale=1000
+scale = 1000
+start = 0
 end = get_endtime()
 
 data = {}
 for d in vcd:
-  u = vcd[d]['tv'][0]
+  tv = [(t[0],t[1],i) for i,t in enumerate(vcd[d]['tv'])]
+
+  results = [(t[0],t[1],t[2]) for t in tv if t[0] > start and t[0] < end]
+  if results[0][0] > start and results[0][2] > 0:
+    results.insert(0, (start, tv[results[0][2] - 1][1], tv[results[0][2] - 1][2]) )
+  if results[-1][0] < end and results[-1][2] < tv[-1][2]:
+    results.append( (end, tv[results[-1][2] + 1][1], tv[results[-1][2] + 1][2]) )
+
+  u = results[0]
   dv = []
-  for v in vcd[d]['tv'][1:]:
+  for v in results[1:]:
     dv.append( ((v[0]-u[0])*1./scale, u[1]) )
     u = v
   dv.append( ((end-u[0])*1./scale, u[1]) )
@@ -58,4 +68,10 @@ for d in data:
   f.close()
 
 if os.path.isfile(fns[0] + ".tmp"):
+  f = open(fns[0] + "_timecodes.tex", "w")
+  f.write("\\providecommand\\timeStart{0}")
+  f.write("\\renewcommand\\timeStart{" + str(start*1./scale) + "}");
+  f.write("\\providecommand\\timeEnd{0}")
+  f.write("\\renewcommand\\timeEnd{" + str(end*1./scale) + "}");
+  f.close();
   os.system("latexpand " + fns[0] + ".tmp > " + fns[0] + ".tex")
