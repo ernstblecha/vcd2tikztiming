@@ -14,3 +14,8 @@ needs:
 creates:
  + a .dmp-file for every signal
  + if a template was given the signals will be imported into the template (for me using input sadly did not work within tikztiming...)
+
+parameters:
+ + you can set starttime, stoptime and scale-factor from the symlink filename (see example directory)
+   parameters will not be included in output-filename 
+   you might want to use additional symlinks and directories in more compliacted cases

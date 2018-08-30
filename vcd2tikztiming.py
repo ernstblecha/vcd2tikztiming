@@ -24,9 +24,35 @@ fns = fn.split('.')
 
 vcd = parse_vcd(fns[0]+'.vcd')
 
-scale = 1000
-start = 250
+start = 0
 end = get_endtime()
+scale = 1000
+
+for f in fns[1:-1]:
+    if f.startswith("start="):
+        start = int(f[6:])
+        if start > get_endtime():
+            start = get_endtime()
+        if start < 0:
+            start = 0
+        if start > end:
+            start = end
+#        print("start: " + str(start))
+    elif f.startswith("end="):
+        end = int(f[4:])
+        if end > get_endtime():
+            end = get_endtime()
+        if end < 0:
+            end = 0
+        if end < start:
+            end = start
+#        print("end: " + str(end))
+    elif f.startswith("scale="):
+        scale = int(f[6:])
+        if scale < 0:
+            scale = abs(scale)
+#        print("scale: " + str(scale))
+
 
 data = {}
 for d in vcd:
