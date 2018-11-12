@@ -3,7 +3,7 @@
 converts ValueChangeDump-Files to tikz-timing-diagrams
 
 needs:
- + python
+ + python3
  + Verilog_VCD ( see https://pypi.org/project/Verilog_VCD/#files )
  + (optional) latexpand - if you want to use the tex-template (see later!)
  + a vcd-file (currently only digital signals will have a chance of working)
@@ -12,8 +12,8 @@ needs:
  + run the python file (for the example-directory: python siggen_tb.py)
 
 creates:
- + a .dmp-file for every signal
- + if a template was given the signals will be imported into the template (for me using input sadly did not work within tikztiming...)
+ + a .dmp-file for every signal (basically a single line of tikz-timing-diagram data)
+ + if a template was given the signals will be imported into the template (for me using input sadly did not work within tikztiming...) and the output will be saved as a .tex-file
 
 parameters:
  + you can set starttime, stoptime and scale-factor from the symlink filename (see example directory)
