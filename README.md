@@ -1,6 +1,6 @@
 # vcd2tikztiming
 
-converts ValueChangeDump-Files to tikz-timing-diagrams
+converts ValueChangeDump-Files to tikz-timing-diagrams ( see https://bitbucket.org/martin_scharrer/tikz-timing for the latex-package)
 
 needs:
  + python3
