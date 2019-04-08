@@ -19,3 +19,6 @@ parameters:
  + you can set starttime, stoptime and scale-factor from the symlink filename (see example directory)
    parameters will not be included in output-filename 
    you might want to use additional symlinks and directories in more compliacted cases
+
+example:
+![example time signal](https://github.com/ernstblecha/vcd2tikztiming/raw/master/example/siggen_tb.png)
